@@ -25,7 +25,6 @@ namespace DAO
 
                 MontarParametro(0, param, ParameterDirection.Input, "@STA_STATUS", obj.Produto_Cosif.Produto.Sta_Produto, SqlDbType.VarChar);
 
-
                 dr = ExecReader("USP_MOVIMENTO_MANUAIS_GET", cmd, param);
 
                 if (dr != null)
