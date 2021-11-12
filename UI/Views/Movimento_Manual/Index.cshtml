@@ -1,0 +1,117 @@
+﻿@model UI.Models.Movimento_ManualModel
+
+@{
+    ViewBag.Title = "Movimentos Manuais";
+}
+
+<form id="idMovimento" action="@Url.Action("Index")" method="post" enctype="multipart/form-data">
+    <div class="panel panel-default">
+        <div class="panel-heading" style="display:flex; justify-content: space-between;">
+            <h3 class="panel-title" style="display:flex; align-items: center;">Movimentos Manuais</h3>
+        </div>
+        <div class="panel-body">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Mês&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    <input type="number" class="form-control dh" name="Entidade.Dat_Mes" min="1" max="12" disabled required />
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Ano&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                    <input type="number" name="Entidade.Dat_ano" class="form-control dh" min="1950" max="2030" disabled required />
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Produto &nbsp;&nbsp;</label>
+                    <select class="form-control dh" disabled name="Entidade.Produto_Cosif.Produto.Cod_Produto" required>
+                        <option>selecione...</option>
+                        @foreach (var i in Model.ListProduto_Cosif)
+                        {
+                            <option value="@i.Produto.Cod_Produto">@i.Produto.Des_produto</option>
+
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Cosif &nbsp;&nbsp;</label>
+                    <select class="form-control dh" disabled name="Entidade.Produto_Cosif.Cod_Cosif" required>
+                        <option>selecione...</option>
+                        @foreach (var i in Model.ListProduto_Cosif)
+                        {
+                            //na prova não ficou claro o que era pra colocar no cod_cosif
+                            //tambem não ficou claro se era pra concatenar cod_cosif e COD_CLASSIFICACAO
+                            <option value="@i.Cod_Cosif">@i.Cod_Cosif </option>
+                            <option value="@i.Cod_Classificacao">@i.Cod_Classificacao </option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Valor&nbsp;&nbsp; &nbsp; </label>
+                    <input type="number" name="Entidade.Valor" class="form-control form-inline dh valor" disabled required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Descrição&nbsp;&nbsp; &nbsp; </label>
+                    <textarea type="text" name="Entidade.Des_Descricao" class="form-control form-inline dh" disabled required> </textarea>
+                </div>
+                <div class="form-row">
+                    <br />
+                    <div class="">
+                        <button type="button" class="btn btn-primary dh" id="idLimpar" disabled>Limpar</button>
+                        <button type="button" class="btn btn-success dh" id="idHabilitar">Novo</button>
+                        <button type="submit" class="btn btn-info dh" disabled>Incluir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form id="lista" method="get" enctype="multipart/form-data">
+    <div class="panel panel-default">
+        <div class="panel-heading" style="display:flex; justify-content: space-between;">
+            <h3 class="panel-title" style="display:flex; align-items: center;">Lista</h3>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                <div class="control-section">
+                    <table class="table table-striped" id="myTable">
+                        <thead>
+                            <tr>
+                                <th>Mês</th>
+                                <th>Ano</th>
+                                <th>Código do Produto</th>
+                                <th>Descrição do Produto</th>
+                                <th>NM Lançamento</th>
+                                <th>Descrição</th>
+                                <th>Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ListDados)
+                            {
+                                <tr>
+                                    <td><span>@item.Dat_Mes</span></td>
+                                    <td><span>@item.Dat_ano</span></td>
+                                    <td><span>@item.Produto_Cosif.Produto.Cod_Produto</span></td>
+                                    <td><span>@item.Produto_Cosif.Produto.Des_produto</span></td>
+                                    <td><span>@item.Num_Lancamento</span></td>
+                                    <td><span>@item.Des_Descricao</span></td>
+                                    <td><span>@item.Valor</span></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+
+    $("#idHabilitar").click(function () {
+        $('.dh').removeAttr("disabled")
+    });
+
+    $("#idLimpar").click(function () {
+        $('#idMovimento')[0].reset();
+    });
+
+</script>
